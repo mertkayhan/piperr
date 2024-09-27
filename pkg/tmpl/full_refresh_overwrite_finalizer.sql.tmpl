@@ -1,0 +1,11 @@
+BEGIN
+  BEGIN TRANSACTION;
+    TRUNCATE TABLE {{ .OriginalTable }};
+    INSERT INTO {{ .OriginalTable }}
+    SELECT * FROM {{ .TmpTable }};
+  COMMIT TRANSACTION;
+  EXCEPTION WHEN ERROR THEN
+  -- Roll back the transaction inside the exception handler.
+  SELECT @@error.message;
+  ROLLBACK TRANSACTION;
+END;

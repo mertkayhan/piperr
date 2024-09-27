@@ -1,0 +1,15 @@
+{
+    "source_type": "Custom",
+    "source_args": {
+        "cmd": "sleep",
+        "args": ["3600"]
+    },
+    "source_config": {},
+    "destination_type": "BigQuery",
+    "destination_args": {},
+    "destination_config": {
+        "project_id": "test",
+        "dataset_id": "test",
+        "table_id": "test"
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "TestStream": {
+        "mode": "IncrementalAppend",
+        "primary_key": "id",
+        "composite_key": ["user_id", "email_id"],
+        "ticker": "updated_date"
+    }	
+}
