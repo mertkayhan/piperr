@@ -2,12 +2,14 @@ package tmpl
 
 import (
 	"bytes"
+	_ "embed"
 	"fmt"
-	"os"
-	"path"
 	"strings"
 	"text/template"
 )
+
+//go:embed full_refresh_overwrite_finalizer.sql.tmpl
+var FullRefreshOverwriteFinalizer string
 
 var funcs = template.FuncMap{
 	"join":   strings.Join,
@@ -29,13 +31,8 @@ type Query struct {
 }
 
 func CreateFullRefreshOverwriteFinalizer(q *Query) (string, error) {
-	cwd, err := os.Getwd()
-	if err != nil {
-		return "", fmt.Errorf("CreateFullRefreshOverwriteFinalizer: %w", err)
-	}
-	file := path.Join(cwd, "pkg/tmpl/full_refresh_overwrite_finalizer.sql.tmpl")
 	name := "full_refresh_overwrite_finalizer.sql.tmpl"
-	tmpl, err := template.New(name).Funcs(funcs).ParseFiles(file)
+	tmpl, err := template.New(name).Funcs(funcs).Parse(FullRefreshOverwriteFinalizer)
 	if err != nil {
 		return "", fmt.Errorf("CreateFullRefreshOverwriteFinalizer: %w", err)
 	}
